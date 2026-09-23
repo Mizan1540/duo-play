@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
-void main()=>runApp(const MyApp());
-class MyApp extends StatelessWidget{const MyApp({super.key});@override Widget build(BuildContext c)=>MaterialApp(debugShowCheckedModeBanner:false,theme:ThemeData.dark(),home:const Home());}
-class Home extends StatelessWidget{const Home({super.key});@override Widget build(BuildContext c){return Scaffold(appBar:AppBar(title:const Text('Duo Play'),centerTitle:true,backgroundColor:Colors.yellow[700],foregroundColor:Colors.black),body:Center(child:Column(mainAxisAlignment:MainAxisAlignment.center,children:[SizedBox(width:220,height:60,child:ElevatedButton.icon(icon:const Icon(Icons.grid_3x3),label:const Text('Tic Tac Toe'),onPressed:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>const TicTac())))),const SizedBox(height:20),SizedBox(width:220,height:60,child:ElevatedButton.icon(icon:const Icon(Icons.casino),label:const Text('Ludo Race'),onPressed:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>const Ludo())))),const SizedBox(height:20),SizedBox(width:220,height:60,child:ElevatedButton.icon(icon:const Icon(Icons.show_chart),label:const Text('Snake & Ladder'),onPressed:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>const Snake()))))])));}}
-class TicTac extends StatefulWidget{const TicTac({super.key});@override State<TicTac> createState()=>_TicTacS();}
-class _TicTacS extends State<TicTac>{List<String> b=List.filled(9,'');bool x=true;String? win;void tap(int i){if(b[i]!=''||win!=null)return;setState((){b[i]=x?'X':'O';x=!x;check();});}void check(){const w=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];for(var l in w){if(b[l[0]]!=''&&b[l[0]]==b[l[1]]&&b[l[0]]==b[l[2]]){win=b[l[0]];return;}}if(!b.contains(''))win='Draw';}@override Widget build(BuildContext c){return Scaffold(appBar:AppBar(title:Text(win==null?'Turn: ${x?'X':'O'}':'Winner: $win')),body:Column(children:[Expanded(child:GridView.builder(padding:const EdgeInsets.all(20),gridDelegate:const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:3),itemCount:9,itemBuilder:(c,i)=>GestureDetector(onTap:()=>tap(i),child:Container(margin:const EdgeInsets.all(6),decoration:BoxDecoration(color:Colors.white12,borderRadius:BorderRadius.circular(12)),child:Center(child:Text(b[i],style:const TextStyle(fontSize:48))))))),ElevatedButton(onPressed:()=>setState((){b=List.filled(9,'');win=null;x=true;}),child:const Text('Restart'))]));}}
-class Ludo extends StatefulWidget{const Ludo({super.key});@override State<Ludo> createState()=>_LudoS();}
-class _LudoS extends State<Ludo>{int p1=0,p2=0;bool t1=true;int d=1;void roll(){int r=1+DateTime.now().millisecond%6;setState((){d=r;if(t1){p1=(
+void main()=>runApp(MaterialApp(home:H(),debugShowCheckedModeBanner:false));
+class H extends StatelessWidget{
+Widget build(c)=>Scaffold(appBar:AppBar(title:Text('Duo Play')),body:Center(child:Column(mainAxisSize:MainAxisSize.min,children:[
+ElevatedButton(onPressed:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>T())),child:Text('Tic Tac Toe')),
+SizedBox(height:10),
+ElevatedButton(onPressed:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>L())),child:Text('Ludo')),
+SizedBox(height:10),
+ElevatedButton(onPressed:()=>Navigator.push(c,MaterialPageRoute(builder:(_)=>S())),child:Text('Snake Ladder')),
+]))));}
+class T extends StatefulWidget{State createState()=>TS();}
+class TS extends State<T>{var b=List.filled(9,'');String w='';bool x=true;
+Widget build(c)=>Scaffold(appBar:AppBar(title:Text(w==''?'Turn: ${x?'X':'O'}':w=='D'?'Draw':'Win: $w')),body:Column(children:[
+Expanded(child:GridView.builder(padding:EdgeInsets.all(20),gridDelegate:SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:3),itemCount:9,itemBuilder:(c,i)=>GestureDetector(onTap:(){if(b[i]!=''||w!='')return;setState((){b[i]=x?'X':'O';var g=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];for(var l in g){if(b[l[0]]!=''&&b[l[0]]==b[l[1]]&&b[l[0]]==b[l[2]])w=b[l[0
